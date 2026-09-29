@@ -1,0 +1,42 @@
+﻿@page "/"
+
+<MudStack>
+    <MudStack Row="true" Spacing="2" Class="mb-4">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Toggle">
+            Toggle language
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" OnClick="ForceRender">
+            Force re-render
+        </MudButton>
+    </MudStack>
+
+    <MudStepper Vertical="true">
+            <MudStep Title="@Title1" SecondaryText="@Description1">
+                <MudText>Content of step 1: @Title1</MudText>
+            </MudStep>
+            <MudStep Title="@Title2" SecondaryText="@Description2">
+                <MudText>Content of step 2: @Title2</MudText>
+            </MudStep>
+    </MudStepper>
+
+    <MudDivider Class="my-4" />
+
+    <MudText Typo="Typo.caption">Plain text (reference, same field):</MudText>
+    <MudText>@Title1 / @Title2 &nbsp;|&nbsp; renders: @_renderCount</MudText>
+</MudStack>
+
+@code {
+    private bool _italian;
+    private int _renderCount;
+
+    private string Title1 => _italian ? "Titolo italiano 1" : "Title English 1";
+    private string Description1 => _italian ? "Descrizione italiana 1" : "English description 1";
+    private string Title2 => _italian ? "Titolo italiano 2" : "Title English 2";
+    private string Description2 => _italian ? "Descrizione italiana 2" : "English description 2";
+
+    private void Toggle() => _italian = !_italian;
+
+    private void ForceRender() => StateHasChanged();
+
+    protected override void OnAfterRender(bool firstRender) => _renderCount++;
+}
